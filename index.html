@@ -1,0 +1,764 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>恋するへびべあ診断 🐍🐰🐙🎐 ｜ 毒舌MBTI恋愛診断・全64タイプ</title>
+<meta name="description" content="よくある16タイプ診断じゃ物足りないあなたへ。6つの軸・全30問・全64タイプであなたの恋愛をぜんぶ暴く毒舌診断。覚悟はいい？">
+<meta property="og:title" content="恋するへびべあ診断 🐍🐰🐙🎐">
+<meta property="og:description" content="毒舌の生き物たちがあなたの恋愛をぜんぶ暴く。全30問・64タイプのMBTI恋愛診断。情け容赦ない辛口、覚悟はいい？">
+<meta property="og:type" content="website">
+<!-- 本番デプロイ時に 1200×630 の ogp.png を同階層に設置してください -->
+<meta property="og:image" content="ogp.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg0:#140f22; --bg1:#1d1535; --card:#241a3f; --card2:#2d2150;
+    --line:#3a2c63; --ink:#f3efff; --sub:#b7add6; --mut:#8a7fb0;
+    --acid:#b6ff3c; --pink:#ff4d8d; --purple:#a855f7; --cyan:#4de2ff;
+    --shadow:0 18px 50px rgba(0,0,0,.45);
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  html,body{margin:0;padding:0}
+  body{
+    font-family:"Noto Sans JP",-apple-system,"Hiragino Kaku Gothic ProN",sans-serif;
+    color:var(--ink);
+    background:
+      radial-gradient(1100px 700px at 12% -8%, #34205c 0%, transparent 55%),
+      radial-gradient(900px 600px at 110% 8%, #4a1d46 0%, transparent 50%),
+      linear-gradient(160deg, var(--bg0), var(--bg1) 70%, #100c1c);
+    background-attachment:fixed;
+    min-height:100vh;
+    line-height:1.75;
+    overflow-x:hidden;
+  }
+  .wrap{max-width:680px;margin:0 auto;padding:22px 18px 80px}
+  .ddg{font-family:"Dela Gothic One",sans-serif;font-weight:400;letter-spacing:.01em}
+
+  /* keyboard focus（:focus-visible 明示） */
+  .opt:focus-visible, .btn:focus-visible, .back:focus-visible{
+    outline:3px solid var(--cyan); outline-offset:2px}
+
+  /* ---- screens ---- */
+  .screen{display:none;animation:rise .5s cubic-bezier(.2,.8,.2,1)}
+  .screen.on{display:block}
+  @keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+
+  /* ---- start ---- */
+  .hero{text-align:center;padding:28px 6px 6px}
+  .badge{display:inline-block;font-size:12px;font-weight:700;letter-spacing:.12em;
+    color:var(--acid);border:1px solid var(--acid);border-radius:999px;padding:6px 14px;
+    background:rgba(182,255,60,.07);margin-bottom:16px}
+  .mascot{font-size:clamp(42px,13vw,58px);line-height:1;margin:4px 0 2px;letter-spacing:4px;
+    filter:drop-shadow(0 8px 16px rgba(0,0,0,.4))}
+  .hero h1{font-size:clamp(29px,8.4vw,46px);margin:.08em 0 .12em;line-height:1.18;
+    background:linear-gradient(100deg,#fff 10%,var(--pink) 55%,var(--purple));
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+    filter:drop-shadow(0 4px 18px rgba(255,77,141,.25))}
+  .hero .sub{color:var(--sub);font-size:15.5px;max-width:440px;margin:6px auto 0}
+  .hero .sub b{color:var(--acid)}
+  .vs{display:inline-flex;align-items:center;gap:9px;margin:16px auto 0;
+    font-size:13px;font-weight:700;color:var(--sub);
+    background:var(--card);border:1px solid var(--line);border-radius:999px;padding:8px 17px}
+  .vs s{color:var(--mut);opacity:.75}
+  .vs b{color:var(--acid);font-size:16px;font-family:"Dela Gothic One",sans-serif}
+  .warn{margin:20px auto 0;max-width:440px;font-size:13px;color:#ffb3cf;font-weight:500;
+    background:rgba(255,77,141,.09);border:1px dashed rgba(255,77,141,.55);
+    border-radius:14px;padding:12px 16px}
+  .specs{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin:22px 0 4px}
+  .spec{background:var(--card);border:1px solid var(--line);border-radius:14px;
+    padding:12px 14px;min-width:88px}
+  .spec b{display:block;font-size:22px;color:var(--acid);font-family:"Dela Gothic One",sans-serif}
+  .spec span{font-size:11.5px;color:var(--mut);letter-spacing:.05em}
+
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;
+    border:none;cursor:pointer;font-weight:700;font-family:inherit;
+    border-radius:16px;padding:17px 30px;font-size:17px;color:#1a1130;
+    background:linear-gradient(100deg,var(--acid),#7be0ff);
+    box-shadow:0 12px 30px rgba(182,255,60,.28);transition:transform .12s ease,box-shadow .12s ease;
+    width:100%;max-width:360px;margin:24px auto 0}
+  .btn:active{transform:translateY(2px) scale(.99)}
+  .btn.ghost{background:transparent;color:var(--ink);border:1.5px solid var(--line);
+    box-shadow:none;font-size:15px;padding:14px 22px}
+  .btn.pink{background:linear-gradient(100deg,var(--pink),var(--purple));color:#fff;
+    box-shadow:0 12px 30px rgba(255,77,141,.3)}
+  .btn-row{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:14px}
+  .btn-row .btn{margin:0;flex:1 1 150px}
+
+  /* ---- quiz ---- */
+  .topbar{display:flex;align-items:center;gap:12px;margin:8px 0 22px}
+  .progress{flex:1;height:10px;background:var(--card);border-radius:999px;overflow:hidden;border:1px solid var(--line)}
+  .progress > i{display:block;height:100%;width:0;border-radius:999px;
+    background:linear-gradient(90deg,var(--pink),var(--acid));transition:width .35s cubic-bezier(.2,.8,.2,1)}
+  .qcount{font-size:13px;color:var(--sub);font-weight:700;white-space:nowrap;font-variant-numeric:tabular-nums}
+  .qcount b{color:var(--acid);font-size:17px}
+
+  .qcard{background:linear-gradient(180deg,var(--card),var(--card2));
+    border:1px solid var(--line);border-radius:24px;padding:30px 22px 26px;box-shadow:var(--shadow)}
+  .qtag{display:inline-block;font-size:11px;font-weight:700;letter-spacing:.12em;
+    color:var(--cyan);background:rgba(77,226,255,.08);border:1px solid rgba(77,226,255,.3);
+    border-radius:999px;padding:4px 12px;margin-bottom:16px}
+  .qtext{font-size:21px;font-weight:700;line-height:1.55;margin:0 0 22px;min-height:2em}
+  .opts{display:flex;flex-direction:column;gap:12px}
+  .opt{display:flex;align-items:center;gap:14px;text-align:left;cursor:pointer;
+    background:var(--bg1);border:1.5px solid var(--line);border-radius:16px;
+    padding:16px 18px;color:var(--ink);font-size:16px;font-weight:500;font-family:inherit;
+    transition:border-color .15s,background .15s,transform .1s;line-height:1.5}
+  .opt:hover{border-color:var(--purple);background:#26203f}
+  .opt:active{transform:scale(.985)}
+  .opt .pic{font-size:22px;flex:none}
+  .opt.sel{border-color:var(--acid);background:rgba(182,255,60,.1);box-shadow:0 0 0 3px rgba(182,255,60,.12)}
+  /* 5段階スケール（左ボーダーの色で度合いを表現） */
+  .opt-a2{border-left:5px solid var(--acid)}
+  .opt-a1{border-left:5px solid rgba(182,255,60,.5)}
+  .opt-n0{border-left:5px solid var(--mut)}
+  .opt-b1{border-left:5px solid rgba(255,77,141,.5)}
+  .opt-b2{border-left:5px solid var(--pink)}
+  .opt .dot{width:15px;height:15px;border-radius:50%;border:2px solid var(--mut);flex:none}
+  .opt-a1 .dot{border-color:var(--acid)} .opt-b1 .dot{border-color:var(--pink)}
+  .opt .lite{color:var(--sub);font-size:14.5px}
+  .opt.sel .lite{color:var(--ink)}
+  .qnav{display:flex;justify-content:space-between;align-items:center;margin-top:20px}
+  .back{background:none;border:none;color:var(--mut);font-size:14px;cursor:pointer;
+    font-family:inherit;padding:8px;display:inline-flex;align-items:center;gap:4px;border-radius:8px}
+  .back:disabled{opacity:.3;cursor:default}
+  .hint{font-size:12px;color:var(--mut)}
+
+  /* ---- result ---- */
+  .res-hero{text-align:center;position:relative;overflow:hidden;
+    border-radius:26px;padding:30px 20px 26px;box-shadow:var(--shadow);
+    border:1px solid var(--line)}
+  .res-catch{font-size:14px;color:var(--sub);font-weight:700;letter-spacing:.04em}
+  .res-char{margin:6px 0 4px;display:flex;justify-content:center;
+    filter:drop-shadow(0 10px 20px rgba(0,0,0,.45));animation:pop .6s cubic-bezier(.2,1.4,.4,1)}
+  .res-char svg{width:128px;height:auto}
+  @keyframes pop{0%{transform:scale(.3);opacity:0}100%{transform:scale(1);opacity:1}}
+  @keyframes tongue{0%,72%,100%{transform:scaleY(.55)}82%{transform:scaleY(1.05)}}
+  .tongue{transform-box:fill-box;transform-origin:50% 0;animation:tongue 2.4s ease-in-out infinite}
+  .res-name{font-size:clamp(25px,7vw,34px);margin:4px 0 3px;line-height:1.25}
+  .res-animal{font-size:12.5px;color:var(--mut);font-weight:700;letter-spacing:.06em;margin-bottom:4px}
+  .res-code{font-family:"Dela Gothic One",sans-serif;font-size:13px;letter-spacing:.18em;color:var(--mut)}
+  .tags{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin:16px 0 2px}
+  .tag{font-size:12.5px;font-weight:700;border-radius:999px;padding:6px 13px;border:1px solid}
+
+  .sec{background:var(--card);border:1px solid var(--line);border-radius:20px;
+    padding:22px 20px;margin-top:16px}
+  .sec.good-sec{border-color:rgba(182,255,60,.32);background:linear-gradient(180deg,rgba(182,255,60,.06),var(--card))}
+  .sec.bad-sec{border-color:rgba(255,77,141,.32);background:linear-gradient(180deg,rgba(255,77,141,.06),var(--card))}
+  .sec h3{margin:0 0 10px;font-size:16px;display:flex;align-items:center;gap:9px}
+  .sec h3 .ic{font-size:20px}
+  .sec p{margin:0;color:#e7e0ff;font-size:15px}
+  .meter{height:9px;border-radius:999px;background:var(--bg1);overflow:hidden;margin:14px 0 6px;border:1px solid var(--line)}
+  .meter > i{display:block;height:100%;border-radius:999px}
+  .meter-lab{display:flex;justify-content:space-between;font-size:11.5px;color:var(--mut);font-weight:700}
+
+  .match{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:16px}
+  .match .box{background:var(--card);border-radius:18px;padding:18px 16px;border:1px solid var(--line)}
+  .match .box.good{border-color:rgba(182,255,60,.4)}
+  .match .box.bad{border-color:rgba(255,77,141,.4)}
+  .match h4{margin:0 0 10px;font-size:13.5px;letter-spacing:.04em}
+  .match .who{font-weight:700;font-size:15px;line-height:1.5}
+  .match .who small{display:block;color:var(--mut);font-size:11.5px;font-weight:500}
+  .match .good h4{color:var(--acid)} .match .bad h4{color:var(--pink)}
+
+  .share-note{text-align:center;color:var(--mut);font-size:12.5px;margin:24px 0 8px}
+  .toast{position:fixed;left:50%;bottom:28px;transform:translateX(-50%) translateY(30px);
+    background:var(--acid);color:#16240a;font-weight:700;padding:12px 22px;border-radius:14px;
+    box-shadow:0 12px 30px rgba(0,0,0,.4);opacity:0;transition:.3s;pointer-events:none;z-index:50;font-size:14px}
+  .toast.on{opacity:1;transform:translateX(-50%) translateY(0)}
+  .foot{text-align:center;color:var(--mut);font-size:11.5px;margin-top:34px;line-height:1.7}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- ============ START ============ -->
+  <section id="start" class="screen on">
+    <div class="hero">
+      <span class="badge">毒舌MBTI恋愛診断 ・ 全64タイプ</span>
+      <div class="mascot" aria-hidden="true">🐍🐰🐙🎐</div>
+      <h1 class="ddg">恋するへびべあ診断</h1>
+      <p class="sub">見た目はゆるかわ、中身は猛毒。<br>巷の“16タイプ診断”じゃ物足りないあなたを、恋愛で<b>64通り</b>に切り刻む。</p>
+      <div class="vs">よくある診断 <s>16タイプ</s> ➜ この診断 <b>64タイプ</b></div>
+      <div class="specs">
+        <div class="spec"><b id="specQ">50</b><span>QUESTIONS</span></div>
+        <div class="spec"><b>6</b><span>AXIS</span></div>
+        <div class="spec"><b>64</b><span>TYPES</span></div>
+      </div>
+      <div class="warn">⚠️ 情け容赦ない、ガチ辛口です。<br>「図星」で凹んでも責任は取れません。覚悟はいい？</div>
+      <button class="btn" onclick="App.start()">診断をはじめる →</button>
+    </div>
+  </section>
+
+  <!-- ============ QUIZ ============ -->
+  <section id="quiz" class="screen">
+    <div class="topbar">
+      <div class="progress" id="progress" role="progressbar" aria-valuemin="0" aria-valuemax="50" aria-valuenow="0" aria-label="診断の進捗"><i id="bar"></i></div>
+      <div class="qcount"><b id="qnum">1</b> / <span id="qtotal">50</span></div>
+    </div>
+    <div class="qcard">
+      <span class="qtag" id="qtag">恋愛タイプ</span>
+      <p class="qtext" id="qtext"></p>
+      <div class="opts" id="opts"></div>
+      <div class="qnav">
+        <button class="back" id="backBtn" onclick="App.back()" aria-label="前の質問にもどる">← 前にもどる</button>
+        <span class="hint">選んだら自動で次へ</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ RESULT ============ -->
+  <section id="result" class="screen">
+    <div class="res-hero" id="resHero">
+      <p class="res-catch" id="rCatch"></p>
+      <div class="res-char" id="rChar"></div>
+      <h2 class="res-name ddg" id="rName"></h2>
+      <div class="res-animal" id="rAnimal"></div>
+      <div class="res-code" id="rCode"></div>
+      <div class="tags" id="rTags"></div>
+    </div>
+
+    <div class="sec"><h3><span class="ic">🔍</span>本性、丸裸にします</h3><p id="rBody"></p></div>
+    <div class="sec good-sec"><h3><span class="ic">💪</span>あなたの恋愛の“武器”</h3><p id="rStrength"></p></div>
+    <div class="sec bad-sec"><h3><span class="ic">💣</span>地雷ポイント</h3><p id="rLandmine"></p></div>
+
+    <div class="sec">
+      <h3><span class="ic">💘</span>恋愛スタイル</h3><p id="rAttack"></p>
+      <div class="meter"><i id="mAttack"></i></div>
+      <div class="meter-lab"><span>🌿 草食</span><span>肉食 🔥</span></div>
+    </div>
+
+    <div class="sec">
+      <h3><span class="ic">⚖️</span>愛の重さ判定</h3><p id="rWeight"></p>
+      <div class="meter"><i id="mWeight"></i></div>
+      <div class="meter-lab"><span>🎈 軽量級</span><span>重量級 💣</span></div>
+    </div>
+
+    <div class="match">
+      <div class="box good"><h4>◎ 最高の相手</h4><div class="who" id="rGood"></div></div>
+      <div class="box bad"><h4>✕ 地雷な相手</h4><div class="who" id="rBad"></div></div>
+    </div>
+
+    <p class="share-note">結果を晒して、友達の本性も暴いてやろう👇</p>
+    <div class="btn-row">
+      <button class="btn pink" onclick="App.share()">🐦 Xでシェア</button>
+      <button class="btn ghost" onclick="App.copy()">🔗 リンクをコピー</button>
+    </div>
+    <div class="btn-row" style="margin-top:10px">
+      <button class="btn ghost" onclick="App.restart()">↺ もう一度診断する</button>
+    </div>
+
+    <div class="foot">
+      恋するへびべあ診断 🐍🐰🐙🎐 ｜ MBTIベースの毒舌恋愛診断（全64タイプ）<br>
+      ※娯楽診断です。本気で凹まないでね。
+    </div>
+  </section>
+
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+/* =========================================================
+   恋するへびべあ診断 — データ & ロジック
+   軸: EI(外向/内向) SN(現実/ロマン) TF(理屈/感情)
+       JP(計画/自由) AD(肉食/草食) HL(重い/軽い)
+   各軸5問 = 30問。合計の符号でタイプ決定（奇数問なので引分なし）。
+   生き物: 分析家NT=ヘビ / 外交官NF=うさぎ / 番人SJ=タコ / 探検家SP=クラゲ
+   ※本家「恋するへびべあ診断(KUMA×16 LOVE TYPES)」とは別物の独自版。名称・文章・キャラはオリジナル。
+   ========================================================= */
+
+const QUESTIONS = [
+  /* ---------- ROUND 1 ---------- */
+  {axis:"EI", a:{p:"🍻",t:"出会いの場じゃん、とりあえず行く"}, b:{p:"🛋️",t:"だるい。家で推しと過ごしたい"},
+   q:"合コンや飲み会に誘われた。正直どう思う？"},
+  {axis:"SN", a:{p:"💰",t:"年収・安定・スペック。現実は大事"}, b:{p:"✨",t:"フィーリングと「運命感じるか」"},
+   q:"恋人に一番に求めるものは？"},
+  {axis:"TF", a:{p:"⚖️",t:"どっちが悪いか論理で詰める"}, b:{p:"🥺",t:"とにかく気持ちをわかってほしい"},
+   q:"恋人とケンカ。あなたの戦い方は？"},
+  {axis:"JP", a:{p:"📅",t:"記念日も将来設計もきっちり管理"}, b:{p:"🍃",t:"流れと勢い、自由が一番"},
+   q:"いざ付き合うと、あなたは？"},
+  {axis:"AD", a:{p:"🏹",t:"自分から告白、押して押して押す"}, b:{p:"🌱",t:"相手から来るまで待つ。来なきゃ縁がない"},
+   q:"好きな人ができたとき、あなたは？"},
+  {axis:"HL", a:{p:"📍",t:"今日誰と何してるか全部知りたい"}, b:{p:"🎐",t:"別に。お互い自由でいいでしょ"},
+   q:"恋人の予定、どこまで把握したい？"},
+
+  /* ---------- ROUND 2 ---------- */
+  {axis:"EI", a:{p:"📣",t:"友達も巻き込んで一気に距離を詰める"}, b:{p:"🕵️",t:"こっそり観察してSNSを掘る"},
+   q:"気になる人ができた。最初の動きは？"},
+  {axis:"SN", a:{p:"🍽️",t:"美味しい店ときっちりしたプラン"}, b:{p:"🎲",t:"「どこ行く？」から始まる予測不能な展開"},
+   q:"理想のデートは？"},
+  {axis:"TF", a:{p:"🛠️",t:"原因を分析して解決策を提示する"}, b:{p:"🤗",t:"まず共感して、ただ寄り添う"},
+   q:"恋人がめちゃくちゃ落ち込んでいる。どうする？"},
+  {axis:"JP", a:{p:"⏰",t:"何時に来るか連絡が欲しい。予定が狂う"}, b:{p:"😌",t:"まあ来るでしょ。適当に時間を潰す"},
+   q:"待ち合わせに相手が遅刻。あなたの心境は？"},
+  {axis:"AD", a:{p:"💌",t:"自分から積極的に誘う"}, b:{p:"📥",t:"誘われるのを待つ"},
+   q:"デート、どっちから誘いたい？"},
+  {axis:"HL", a:{p:"🔁",t:"数ヶ月引きずる。元恋人のSNSも監視"}, b:{p:"🚀",t:"次いこ次。切り替えは早いほう"},
+   q:"別れたあと、あなたは？"},
+
+  /* ---------- ROUND 3 ---------- */
+  {axis:"EI", a:{p:"🎉",t:"そのまま大人数で二次会に合流したい"}, b:{p:"🌙",t:"二人きりで静かに、むしろ早く一人になりたい"},
+   q:"楽しいデートのあと、理想の流れは？"},
+  {axis:"SN", a:{p:"📊",t:"積み重ねた事実と、相手の実際の行動"}, b:{p:"⚡",t:"第一印象と、ビビッときた直感"},
+   q:"恋愛で、あなたが信じるのは？"},
+  {axis:"TF", a:{p:"💹",t:"実用性とコスパで選ぶ"}, b:{p:"🎁",t:"喜ぶ顔を想像して、気持ちで選ぶ"},
+   q:"恋人へのプレゼント、選ぶ基準は？"},
+  {axis:"JP", a:{p:"🗂️",t:"予定はしっかり立てておきたい"}, b:{p:"🎰",t:"その日の気分で決めたい"},
+   q:"デートの計画、どう進める？"},
+  {axis:"AD", a:{p:"♟️",t:"仕掛けて、主導権を握りたい"}, b:{p:"🛟",t:"仕掛けられて、受けるほうが楽"},
+   q:"恋の駆け引き、あなたのスタンスは？"},
+  {axis:"HL", a:{p:"📱",t:"毎日まめに繋がっていたい"}, b:{p:"📴",t:"用があるときだけで十分"},
+   q:"恋人との連絡頻度、理想は？"},
+
+  /* ---------- ROUND 4 ---------- */
+  {axis:"EI", a:{p:"☎️",t:"すぐ通話、すぐ会う"}, b:{p:"💬",t:"メッセージで十分わかってから会う"},
+   q:"マッチングアプリで気になる人を見つけた。"},
+  {axis:"SN", a:{p:"🏡",t:"現実的な生活設計込みで、誠実に"}, b:{p:"🎆",t:"一生記憶に残る、ドラマチックな演出で"},
+   q:"プロポーズされるなら、どっち？"},
+  {axis:"TF", a:{p:"🧮",t:"メリットとデメリットを冷静に天秤にかける"}, b:{p:"💔",t:"気持ちが冷めたか、まだ好きか"},
+   q:"別れを決めるとき、判断の軸は？"},
+  {axis:"JP", a:{p:"✅",t:"返信は早めに、きっちり返す"}, b:{p:"🦥",t:"気が向いたとき。未読も放置しがち"},
+   q:"恋人へのLINE、あなたのスタイルは？"},
+  {axis:"AD", a:{p:"🎯",t:"すかさず距離を詰める"}, b:{p:"🔒",t:"確信が持てるまで動かない"},
+   q:"相手から脈ありサインを感じたら？"},
+  {axis:"HL", a:{p:"🌋",t:"モヤモヤして、つい問い詰めたくなる"}, b:{p:"🧘",t:"気にしない。信頼してるから"},
+   q:"恋人が他の異性と楽しそうにしていたら？"},
+
+  /* ---------- ROUND 5 ---------- */
+  {axis:"EI", a:{p:"🌟",t:"いろんな所へ出かけて、刺激をもらう"}, b:{p:"🔋",t:"家でまったり。それで充電できる"},
+   q:"恋人と一緒にいて、元気が出るのは？"},
+  {axis:"SN", a:{p:"📖",t:"具体的なエピソードや条件の話"}, b:{p:"🌌",t:"「運命って何だろう」みたいな話"},
+   q:"恋バナで盛り上がるのは、どっち？"},
+  {axis:"TF", a:{p:"🔎",t:"理由は？根拠は？とつい分析しちゃう"}, b:{p:"☺️",t:"理屈抜きで、嬉しくて舞い上がる"},
+   q:"「好き」と言われたとき、あなたは？"},
+  {axis:"JP", a:{p:"🪜",t:"次の段階を決めて、進めていきたい"}, b:{p:"🌊",t:"なりゆきに任せて、流れていきたい"},
+   q:"関係の進め方、しっくりくるのは？"},
+  {axis:"AD", a:{p:"🚗",t:"自分がリードしたい"}, b:{p:"🎀",t:"相手にぐいぐい引っ張ってほしい"},
+   q:"恋の主導権、本音はどっち？"},
+  {axis:"HL", a:{p:"💞",t:"恋人中心。頭の中はほぼ恋愛で埋まる"}, b:{p:"🧩",t:"恋愛は人生の一部。ほどほどがいい"},
+   q:"恋愛が生活に占める割合は？"},
+
+  /* ---------- ROUND 6 ---------- */
+  {axis:"EI", a:{p:"🎊",t:"喜んで参加、すぐ打ち解ける"}, b:{p:"😶",t:"正直しんどい、気をつかって疲れる"},
+   q:"恋人の友達の集まりに誘われたら？"},
+  {axis:"SN", a:{p:"📈",t:"具体的な生活設計や貯金計画"}, b:{p:"🌠",t:"二人の夢や“運命”の話"},
+   q:"将来の話、どっちで盛り上がる？"},
+  {axis:"TF", a:{p:"🧭",t:"どうすれば解決するか一緒に考える"}, b:{p:"🫂",t:"とにかく「大変だったね」と共感する"},
+   q:"恋人が仕事の愚痴をこぼした。あなたは？"},
+  {axis:"JP", a:{p:"🗺️",t:"しおりを作り込む派"}, b:{p:"🎒",t:"ノープラン、行き当たりばったり"},
+   q:"二人で旅行。計画はどうする？"},
+  {axis:"AD", a:{p:"⚡",t:"即アプローチ、善は急げ"}, b:{p:"🐢",t:"しばらくは様子見、慎重に"},
+   q:"好きになったら、まず行動は？"},
+  {axis:"HL", a:{p:"🧲",t:"できる限り、ずっと一緒にいたい"}, b:{p:"🪟",t:"一人の時間もちゃんと欲しい"},
+   q:"恋人といられる時間について、本音は？"},
+
+  /* ---------- ROUND 7 ---------- */
+  {axis:"EI", a:{p:"🗣️",t:"緊張せず会話を回せる"}, b:{p:"🫠",t:"慣れるまで言葉に詰まりがち"},
+   q:"付き合いたての相手とのデート、あなたは？"},
+  {axis:"SN", a:{p:"🧦",t:"実用的で長く使えるもの"}, b:{p:"🎀",t:"思い出に残るサプライズ"},
+   q:"記念日にもらって嬉しいのは？"},
+  {axis:"TF", a:{p:"⭐",t:"口コミ評価と価格で選ぶ"}, b:{p:"🕯️",t:"雰囲気とフィーリングで選ぶ"},
+   q:"デートのお店、決め手は？"},
+  {axis:"JP", a:{p:"📌",t:"決まっていると安心する"}, b:{p:"🍃",t:"縛られたくない、自由がいい"},
+   q:"二人の“先の予定”について"},
+  {axis:"AD", a:{p:"📣",t:"自分からするものでしょ"}, b:{p:"🎐",t:"できれば相手からされたい"},
+   q:"告白って、どっちから？"},
+  {axis:"HL", a:{p:"🔍",t:"正直、めちゃくちゃ気になる"}, b:{p:"🍃",t:"過去は過去、どうでもいい"},
+   q:"恋人の“過去の恋愛”、気になる？"},
+
+  /* ---------- ROUND 8 ---------- */
+  {axis:"EI", a:{p:"🎤",t:"輪の中心で盛り上げるほう"}, b:{p:"🧊",t:"端っこで聞き役にまわる"},
+   q:"大人数の飲み会での自分は？"},
+  {axis:"SN", a:{p:"🧱",t:"恋愛は現実、地に足をつけて"}, b:{p:"📖",t:"恋愛は物語、ときめきが全て"},
+   q:"恋愛観、近いのはどっち？"},
+  {axis:"TF", a:{p:"📊",t:"行動や条件で測れるもの"}, b:{p:"💗",t:"理屈じゃなく、感じるもの"},
+   q:"“愛情”について、近い考えは？"},
+  {axis:"JP", a:{p:"⏱️",t:"だいたい決めておきたい"}, b:{p:"🌙",t:"楽しければ終電も気にしない"},
+   q:"デートの解散時間は？"},
+  {axis:"AD", a:{p:"💪",t:"アピールして振り向かせにいく"}, b:{p:"🌙",t:"そっと想い続ける"},
+   q:"片想い中、あなたの動きは？"},
+  {axis:"HL", a:{p:"🔎",t:"相手の全部を知りたくなる"}, b:{p:"🚪",t:"好きでもプライバシーは尊重する"},
+   q:"好きになると、あなたは？"},
+
+  /* ---------- ROUND 9 ---------- */
+  {axis:"AD", a:{p:"🎣",t:"自分から掴みにいくもの"}, b:{p:"🍀",t:"縁があれば自然と近づくはず"},
+   q:"恋のチャンスって？"},
+  {axis:"HL", a:{p:"🎂",t:"絶対祝いたいし、覚えていてほしい"}, b:{p:"🗓️",t:"忘れてても、まあ気にしない"},
+   q:"記念日へのこだわりは？"}
+];
+
+/* 軸 → [プラス文字, マイナス文字]（a=+1, b=-1）／質問上のラベル */
+const AXIS = {EI:["E","I"], SN:["S","N"], TF:["T","F"], JP:["J","P"], AD:["A","D"], HL:["H","L"]};
+const AXIS_LABEL = {EI:"ノリと社交性", SN:"現実か、ロマンか", TF:"アタマか、ココロか", JP:"計画か、自由か", AD:"攻めか、待ちか", HL:"重いか、軽いか"};
+
+/* MBTI 16タイプ（毒舌・恋愛特化／キャラ名・小物はオリジナル） */
+const TYPES = {
+  /* --- 分析家 NT = ヘビ 🐍 --- */
+  INTJ:{name:"策士べあ", item:"♟️", catch:"恋まで“タスク管理”。で、何年“準備中”のつもり？",
+    body:"好きになった瞬間、相手は“攻略対象”に降格。理想の関係を逆算して、告白の段取りも相手の反応も脳内でシミュ済み。なのに肝心の「好き」は一向に口から出てこない。「察してほしい」が世界一伝わらないこと、そろそろ気づこ。完璧な計画より、不器用な一言のほうが人間には刺さるんだよ。",
+    strength:"一度決めた相手にはとことん誠実。浮ついた駆け引きをせず、長期目線で関係を育てられる。本気になったときの安定感は随一。",
+    landmine:"感情を後回しにして相手を“管理”しはじめた瞬間、恋人はただの案件に降格。気づいた時には、相手の心はとっくに退職済みだよ。",
+    good:["ENFP","ENTP"], bad:["ESFP","ESFJ"]},
+  INTP:{name:"理屈こねべあ", item:"📐", catch:"好きな理由は論文5枚書けるのに、告白は0歩。",
+    body:"頭の中では壮大な恋愛論を展開してるのに、現実では指一本動かさない観察者。「告白の成功率が…」と計算してる間に、ライバルにかっさらわれるのが様式美。相手の心理は完璧に読めるくせに、自分の気持ちだけは永遠に未解析。考えるな、送れ、そのLINE。",
+    strength:"相手を見る解像度が高く、本質的な相性を見抜ける。一緒にいて疲れない、ほどよい距離感の達人。",
+    landmine:"考えてる間に全部終わる。あなたの“検討中”は、相手からすれば“脈なし”と完全に同義。保留グセが一生分のチャンスを溶かす。",
+    good:["ENTJ","ENFJ"], bad:["ESFJ","ISFJ"]},
+  ENTJ:{name:"俺様支配べあ", item:"👑", catch:"恋人は部下じゃない。人生はあなたの会議でもない。",
+    body:"恋愛も征服対象。リードも決断も全部こなす頼れる人…の皮をかぶった支配者。「俺/私についてこい」は頼もしいけど、相手はパートナーであって手駒じゃない。正論で殴れば殴るほど心は離れる。完璧なあなたがたまに見せる弱さに、人は落ちるんだよ。",
+    strength:"決断力と行動力で関係をぐいぐい前進させる。頼れて、守ってくれる安心感は絶大。",
+    landmine:"命令を“提案”に変えられないなら一生同じ。正論で勝った数だけ、隣の席が空いていく。勝って、孤独になる典型。",
+    good:["INFP","INTP"], bad:["ISFP","ESFP"]},
+  ENTP:{name:"狩りだけべあ", item:"🎯", catch:"落とした瞬間に冷めるの、もう持病だよね。",
+    body:"トークと駆け引きは無敵クラス。落とすまでは死ぬほど楽しいのに、手に入れた瞬間、興味は次の獲物へ。刺激がないと枯れる恋愛ジャンキー。相手を言い負かして勝った気でいるけど、恋は議論じゃない。勝ち負けを捨てた日が、本物の恋のスタートラインだよ。",
+    strength:"一緒にいて退屈させない発想力と会話力。マンネリ知らずで、恋の温度を上げるのが天才的。",
+    landmine:"飽きたら次、の繰り返しで残るのは経験人数だけ。「手に入れた瞬間に冷める」を治さないと、一生“狩り”だけで終わる。",
+    good:["INFJ","INTJ"], bad:["ISFJ","ISTJ"]},
+  /* --- 外交官 NF = うさぎ 🐰 --- */
+  INFJ:{name:"運命探しべあ", item:"🔮", catch:"“運命の人”って、現実から逃げるための呪文でしょ。",
+    body:"理想が高くて妄想が深い、隠れ重量級。相手に勝手に理想を投影して、勝手に幻滅するのが得意技。誰にでも優しいから好かれるけど、本心は鉄の扉の奥。「わかってほしい」と願いながら何も言わないの、エスパー求めすぎ。運命は待つものじゃなく“育てる”もんだよ。",
+    strength:"相手の気持ちを深く汲み取り、唯一無二の特別な関係を築ける。心を開いた相手への献身は本物。",
+    landmine:"理想を押し付けて勝手に失望、なのに本心は見せない。エスパーじゃない相手は、ある日なんの前触れもなく静かに去る。",
+    good:["ENFP","ENTP"], bad:["ESTP","ISTP"]},
+  INFP:{name:"脳内恋愛べあ", item:"💭", catch:"脳内で式まで挙げて、現実は未読スルー。",
+    body:"恋に恋するロマンチスト。理想の物語の中では完璧な恋人なのに、現実は一通のLINEも送れず布団でジタバタ。傷つくのが怖くて、好きな人ほど避ける天邪鬼。その繊細さは才能だけど、片想いを“美しい思い出”に昇華させるの、もうやめよ。妄想の彼/彼女、実在させにいこ。",
+    strength:"一途で深い愛情。相手の個性をまるごと受け止める包容力があり、運命の相手には全身全霊。",
+    landmine:"動かない・言わない・傷つきたくない。その三拍子のせいで、好きな人は毎回きれいに他人のものになる。",
+    good:["ENFJ","ENTJ"], bad:["ESTJ","ISTJ"]},
+  ENFJ:{name:"重い愛べあ", item:"🎁", catch:"その愛、重すぎて相手が酸欠なんだけど。",
+    body:"気配り上手で世話焼き、みんなの恋愛相談役。でも自分のことになると、相手のために頑張りすぎて重くなる。「あなたのためなのに」は、たいてい自己満。見返りを求めてないフリして、めっちゃ求めてるよね？まず自分を満たして。あなたが幸せじゃないと、その愛はただの圧になる。",
+    strength:"相手の幸せを本気で願える愛情深さと面倒見の良さ。一緒にいると大切にされている実感をくれる。",
+    landmine:"“あなたのため”は大体が自分のため。見返りを期待した愛は、ある日ぜんぶ重りになって相手を沈める。",
+    good:["INFP","ISFP"], bad:["ISTP","ESTP"]},
+  ENFP:{name:"かまってべあ", item:"📣", catch:"全員に優しいの、誰も本気で好きじゃないからでは？",
+    body:"愛嬌の塊で、誰とでもすぐ仲良くなる恋愛体質。でも気を引きたいだけで、いざ追われると冷める困ったちゃん。悪気なく複数を“いい感じ”にして、罪を量産しがち。寂しがりなのに束縛は無理、という矛盾の塊。本気の一人を選ぶ勇気が出たとき、最強の恋人になる。",
+    strength:"場を明るくする愛嬌と行動力。恋の初速が速く、相手をその気にさせる天性のムードメーカー。",
+    landmine:"八方美人がいつか自分に刺さる。「追われると冷める」癖のせいで、本命すら自分の手で壊して後悔する。",
+    good:["INTJ","INFJ"], bad:["ISTJ","ESTJ"]},
+  /* --- 番人 SJ = タコ 🐙 --- */
+  ISTJ:{name:"マニュアルべあ", item:"📋", catch:"“言わなくても伝わる”←一生伝わらないよ、それ。",
+    body:"真面目で誠実、約束は絶対守る安心枠。でもロマンが致命的に欠乏。記念日は覚えてても、サプライズの発想がそもそもOS非搭載。「言わなくてもわかるだろ」が口癖だけど、わからんから言葉にして。あなたの愛は本物なのに、表現が省エネすぎて毎回損してる。",
+    strength:"誠実で安定。浮気や約束破りとは無縁、長く一緒にいるほど信頼が積み上がる堅実派。",
+    landmine:"マンネリを“安定”と言い張る限界。ロマンの欠如を放置すると、相手は文句も言わず静かに冷めていく。",
+    good:["ESFP","ESTP"], bad:["ENFP","ENTP"]},
+  ISFJ:{name:"断れないべあ", item:"🧺", catch:"“都合のいい人”選手権、優勝おめでとう。",
+    body:"献身的で面倒見抜群、気づけば相手の世話を焼いてる愛されキャラ。なんだけど断れなさすぎて“いいように使われる”常連。自分の気持ちは後回し、不満は溜め込んで、ある日プツンといく静かな爆発型。我慢は美徳じゃない。「NO」を言えた瞬間、あなたを大事にする人だけが残るよ。",
+    strength:"細やかな気配りと尽くす愛で、相手を心から安心させる。縁の下から支える伴侶力は最強クラス。",
+    landmine:"断れない優しさは、舐められる入口。溜め込んだ我慢が無言で爆発して、ある日いきなり全部終わらせる。",
+    good:["ESFP","ESTP"], bad:["ENTP","INTP"]},
+  ESTJ:{name:"正論パンチべあ", item:"☝️", catch:"恋人にダメ出しで勝って、見事に孤独になる人。",
+    body:"頼れるリーダー、決断も行動も爆速。でも恋人にまで「こうすべき」を押し付けて、知らぬ間にダメ出し製造機に。正しさで人の心は動かない、いいかげん学んで。あなたの仕切りは愛情の裏返しだけど、相手は部下じゃない。命令を“お願い”に変えるだけで、関係は激変するよ。",
+    strength:"頼れる安定感と決断力。守るべき相手は全力で守る、宣言通りに動く有言実行タイプ。",
+    landmine:"ダメ出しは愛じゃない。正しさで相手を追い詰めるたび、論破で勝っても隣からひとり、またひとり減っていく。",
+    good:["ISFP","ISTP"], bad:["INFP","ENFP"]},
+  ESFJ:{name:"承認欲しいべあ", item:"🤳", catch:"相手より“周りの目”と付き合ってない？",
+    body:"愛情深くてサービス精神旺盛、恋人を全力で大切にする人。ただ「世間的にちゃんとした関係」へのこだわりが強くて、SNS映えやみんなの評価を気にしすぎ。やきもち焼きでかまってちゃんな一面も。承認を“外”じゃなく目の前の相手からもらえたとき、無敵に幸せになれる。",
+    strength:"愛情表現がまっすぐで豊か。記念日もサプライズも全力、相手を退屈させない尽くし上手。",
+    landmine:"他人の評価がないと不安、やきもちで束縛。その“ちゃんとしてる風”の重さが、相手の自由を確実に削っていく。",
+    good:["ISFP","ISTP"], bad:["INTJ","INTP"]},
+  /* --- 探検家 SP = クラゲ 🎐 --- */
+  ISTP:{name:"塩対応べあ", item:"❄️", catch:"好きな人にだけ塩対応。その癖で何人逃した？",
+    body:"クールで自立、ミステリアスな魅力で勝手に好かれるタイプ。でも感情表現がバグってて、好きな人にこそ素っ気なくなる不器用さん。束縛は大嫌い、ベタベタも無理、なのに放置されると地味に拗ねる。言葉が足りなさすぎて誤解されまくり。「好き」の出し惜しみ、普通に逃げられるよ。",
+    strength:"媚びない自立心と、いざという時の頼もしさ。依存しない大人の距離感が心地いい。",
+    landmine:"好きなほど冷たくする不器用さは、ただの自滅。素っ気なさが“無関心”と誤読されて、好きな人から順に消えていく。",
+    good:["ESFJ","ESTJ"], bad:["INFJ","ENFJ"]},
+  ISFP:{name:"神出鬼没べあ", item:"💨", catch:"都合が悪くなると即・行方不明。便利な特技だね。",
+    body:"優しくて感性豊か、一緒にいると居心地のいい癒し系。でも束縛されるとスッと逃げる自由人で、重い関係は耐えられない。気分屋だから昨日の「好き」が今日には行方不明。本心を語らないからミステリアスに見えるけど、ただ言語化をサボってるだけ説。沈黙は相手に“無関心”と映るよ。",
+    strength:"自然体の優しさと感性で相手を癒す。気取らない、ありのままの居心地の良さは唯一無二。",
+    landmine:"重くなると無言でフェードアウト。あなたにとっての“自由”は、相手にとってはただの放置と置き去りだよ。",
+    good:["ENFJ","ESFJ"], bad:["INTJ","ENTJ"]},
+  ESTP:{name:"刹那ハンターべあ", item:"🔥", catch:"楽しいのは最初だけ。後始末、誰がやるの？",
+    body:"行動力とノリが武器、押しが強くて恋の打席数が異常。盛り上げ上手で一緒にいて最高に楽しいけど、後先考えない刹那主義で、燃え上がってすぐ冷める。スリルがないと退屈する恋愛ジャンキー。手に入れるまでが全盛期になりがち。地味な幸せの良さに気づけたら、一気に大人だ。",
+    strength:"圧倒的な行動力とノリ。恋を一気に加速させる瞬発力と、一緒の時間を全力で楽しませる才能。",
+    landmine:"スリルが切れたら即・興味喪失。盛り上げた分の後始末を、毎回そっくり相手に押し付けて去っていく。",
+    good:["ISFJ","ISTJ"], bad:["INFJ","INFP"]},
+  ESFP:{name:"主役じゃなきゃべあ", item:"🎤", catch:"主役じゃないと拗ねるの、いつまで続けるの？",
+    body:"明るくて華やか、いるだけで場が輝くモテ製造機。チヤホヤされるのが大好物で、注目が自分から逸れると途端に不機嫌。ノリと勢いで付き合って、ノリと勢いで別れる瞬間湯沸かし器。深い話や将来の話からは全力で逃走しがち。地味な日常を愛せたとき、本物の恋人になる。",
+    strength:"一緒にいるだけで楽しい無敵の華と愛嬌。恋人を盛り上げ、毎日をイベントに変えるエンタメ力。",
+    landmine:"注目が切れた瞬間に不機嫌、真剣な話からは全力逃走。楽しいだけの関係は、楽しいまま中身ゼロで終わる。",
+    good:["ISFJ","ESTJ"], bad:["ENTJ","INTP"]}
+};
+
+/* 恋愛軸：肉食/草食 */
+const ATTACK = {
+  A:{tag:"肉食系 🔥", pct:84,
+     body:"狙った獲物は逃さない超・能動派。自分から動けるのは間違いなく長所。…だけど、その圧、引かれてること結構あるからね？「押せば落ちる」を信じすぎて、相手の気持ちの熟成を待てないせっかちさん。一回深呼吸して相手のペースも尊重できたら、もう無敵だよ。"},
+  D:{tag:"草食系 🌿", pct:18,
+     body:"待ちの美学…とか言ってるけど、ほんとは動くのが怖いだけじゃない？「来てくれたら考える」の受け身スタイルで、これまで何回チャンスを見送ってきたことか。慎重なのは魅力だけど、待つだけじゃ宝くじと一緒。たまには自分から一歩、踏み出してみ。"}
+};
+/* 恋愛軸：重い/軽い */
+const WEIGHT = {
+  H:{tag:"重量級 💣", pct:88,
+     body:"愛が、重い。相手のスマホも行動も気持ちも、ぜんぶ知っておきたいタイプ。本人は「これが愛」だと思い込んでるけど、相手には“監視”に感じられてるかも。深く愛せるのは唯一無二の才能。その重さを相手が受け止めきれる量に調整できたら、最高のパートナーになれる。"},
+  L:{tag:"軽量級 🎈", pct:16,
+     body:"執着しない、束縛しない、できた大人…のフリして、実は「誰でもよかった」だったりしない？さっぱりして楽だけど、その軽さ、相手には“本気度が低い”と映ってるかも。広く浅くの代償は、案外深い孤独。本気で誰かにハマる勇気を出した日、恋愛の解像度が爆上がりするよ。"}
+};
+
+/* =========================================================
+   App
+   ========================================================= */
+const App = (()=>{
+  const $ = id => document.getElementById(id);
+  const RE = /^[EI][SN][TF][JP][AD][HL]$/;
+  let answers = [];   // +1 / -1
+  let idx = 0;
+  let advanceTimer = null;
+
+  /* ---- 生き物SVG ---- */
+  function eyes(xL,xR,y,heavy){
+    if(heavy){
+      return `<text x="${xL}" y="${y+4}" font-size="11" text-anchor="middle">❤️</text>`
+           + `<text x="${xR}" y="${y+4}" font-size="11" text-anchor="middle">❤️</text>`;
+    }
+    return `<circle cx="${xL}" cy="${y}" r="4.2" fill="#2b2233"/><circle cx="${xR}" cy="${y}" r="4.2" fill="#2b2233"/>`
+         + `<circle cx="${xL+1.3}" cy="${y-1.4}" r="1.4" fill="#fff"/><circle cx="${xR+1.3}" cy="${y-1.4}" r="1.4" fill="#fff"/>`;
+  }
+  function animalSVG(animal,color,heavy,item){
+    const it = (x,y)=>`<text x="${x}" y="${y}" font-size="18" text-anchor="middle">${item}</text>`;
+    const open = `<svg viewBox="0 0 92 104" xmlns="http://www.w3.org/2000/svg" role="img" aria-hidden="true">`;
+    if(animal==="snake"){
+      /* 鎌首をもたげたヘビ＋とぐろ＋ちろ舌（模様は廃し、胴に寄せた） */
+      return `${open}${it(72,30)}
+        <path d="M52 60 q18 5 14 22 q-4 15 -21 11 q-13 -3 -10 -17" fill="none" stroke="${color}" stroke-width="10" stroke-linecap="round" opacity=".85"/>
+        <path d="M58 67 q3 .5 3.6 3.2" stroke="rgba(0,0,0,.12)" stroke-width="3" fill="none" stroke-linecap="round"/>
+        <ellipse cx="46" cy="42" rx="23" ry="20" fill="${color}"/>
+        ${eyes(38,54,40,heavy)}
+        <circle cx="42" cy="48" r="1.3" fill="#2b2233"/><circle cx="50" cy="48" r="1.3" fill="#2b2233"/>
+        <path d="M40 54 q6 4 12 0" stroke="#2b2233" stroke-width="2" fill="none" stroke-linecap="round"/>
+        <path class="tongue" d="M46 55 v7 M46 62 l-3.2 3.4 M46 62 l3.2 3.4" stroke="#ff4d6a" stroke-width="2.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>`;
+    }
+    if(animal==="rabbit"){
+      /* 耳を顔に接合（回転軸を根本へ）・内耳は下寄り */
+      return `${open}${it(75,32)}
+        <ellipse cx="37" cy="27" rx="6" ry="17" fill="${color}" transform="rotate(-13 41 43)"/>
+        <ellipse cx="55" cy="27" rx="6" ry="17" fill="${color}" transform="rotate(13 51 43)"/>
+        <ellipse cx="37" cy="30" rx="2.6" ry="10.5" fill="#ff9ec4" opacity=".55" transform="rotate(-13 41 43)"/>
+        <ellipse cx="55" cy="30" rx="2.6" ry="10.5" fill="#ff9ec4" opacity=".55" transform="rotate(13 51 43)"/>
+        <circle cx="46" cy="59" r="25" fill="${color}"/>
+        <circle cx="31" cy="62" r="5" fill="#ff9ec4" opacity=".7"/><circle cx="61" cy="62" r="5" fill="#ff9ec4" opacity=".7"/>
+        ${eyes(38,54,57,heavy)}
+        <ellipse cx="46" cy="63" rx="2.3" ry="1.7" fill="#ff7aa8"/>
+        <path d="M46 64.5 v2 M46 66.5 q-3 2.4 -5.8 .7 M46 66.5 q3 2.4 5.8 .7" stroke="#2b2233" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+      </svg>`;
+    }
+    if(animal==="octopus"){
+      /* 7本足＋吸盤 */
+      return `${open}${it(74,24)}
+        <g stroke="${color}" stroke-width="7" stroke-linecap="round" fill="none" opacity=".92">
+          <path d="M26 56 q-10 14 -6 26"/><path d="M34 61 q-6 15 -8 26"/><path d="M42 63 q-3 16 -4 26"/>
+          <path d="M46 64 v25"/>
+          <path d="M50 63 q3 16 4 26"/><path d="M58 61 q6 15 8 26"/><path d="M66 56 q10 14 6 26"/>
+        </g>
+        <g fill="rgba(0,0,0,.13)">
+          <circle cx="21" cy="80" r="2"/><circle cx="27" cy="85" r="2"/><circle cx="39" cy="87" r="2"/>
+          <circle cx="46" cy="86" r="2"/><circle cx="53" cy="87" r="2"/><circle cx="65" cy="85" r="2"/><circle cx="71" cy="80" r="2"/>
+        </g>
+        <ellipse cx="46" cy="41" rx="26" ry="22" fill="${color}"/>
+        <circle cx="27" cy="46" r="4.6" fill="#ff9ec4" opacity=".6"/><circle cx="65" cy="46" r="4.6" fill="#ff9ec4" opacity=".6"/>
+        ${eyes(38,54,40,heavy)}
+        <ellipse cx="46" cy="50" rx="3" ry="2.3" fill="#2b2233"/>
+      </svg>`;
+    }
+    /* jelly：山なりの傘＋裾から触手＋目を離す */
+    return `${open}${it(74,22)}
+      <g stroke="${color}" stroke-width="4" stroke-linecap="round" fill="none" opacity=".62">
+        <path d="M28 56 q-4 16 1 30"/><path d="M37 58 q-2 18 -2 32"/><path d="M46 58 v33"/>
+        <path d="M55 58 q2 18 2 32"/><path d="M64 56 q4 16 -1 30"/>
+      </g>
+      <path d="M19 56 a27 26 0 0 1 54 0 q-7 8 -13.5 2 q-6.5 8 -13.5 0 q-7 7 -13.5 -2 z" fill="${color}" opacity=".85"/>
+      <ellipse cx="36" cy="38" rx="8" ry="4" fill="#fff" opacity=".28"/>
+      <circle cx="29" cy="49" r="4.3" fill="#ff9ec4" opacity=".5"/><circle cx="63" cy="49" r="4.3" fill="#ff9ec4" opacity=".5"/>
+      ${eyes(35,57,46,heavy)}
+      <path d="M40 51 q6 5 12 0" stroke="#2b2233" stroke-width="2" fill="none" stroke-linecap="round"/>
+    </svg>`;
+  }
+
+  function show(name){
+    document.querySelectorAll(".screen").forEach(s=>s.classList.remove("on"));
+    $(name).classList.add("on");
+    window.scrollTo({top:0,behavior:"instant"});
+  }
+
+  function start(){ answers = []; idx = 0; if(advanceTimer){clearTimeout(advanceTimer);advanceTimer=null;} show("quiz"); render(); }
+
+  /* 各質問を a(+2)〜b(-2) の5段階スケールに展開 */
+  function scaleFor(Q){
+    return [
+      {v: 2,  cls:"a2", pic:Q.a.p, t:Q.a.t},
+      {v: 1,  cls:"a1", t:"どちらかというと ↑"},
+      {v: 0,  cls:"n0", t:"どちらとも言えない"},
+      {v:-1,  cls:"b1", t:"どちらかというと ↓"},
+      {v:-2,  cls:"b2", pic:Q.b.p, t:Q.b.t}
+    ];
+  }
+
+  function render(){
+    const Q = QUESTIONS[idx];
+    $("qnum").textContent = idx+1;
+    $("qtag").textContent = AXIS_LABEL[Q.axis];
+    $("bar").style.width = ((idx)/QUESTIONS.length*100)+"%";
+    $("progress").setAttribute("aria-valuenow", idx);
+    $("qtext").textContent = Q.q;
+    $("backBtn").disabled = idx===0;
+    const cur = answers[idx];
+    const opts = $("opts"); opts.innerHTML = "";
+    scaleFor(Q).forEach(o=>{
+      const on = cur === o.v;
+      const b = document.createElement("button");
+      b.className = "opt opt-" + o.cls + (on ? " sel" : "");
+      b.setAttribute("aria-pressed", on ? "true" : "false");
+      b.innerHTML = o.pic
+        ? `<span class="pic">${o.pic}</span><span>${o.t}</span>`
+        : `<span class="dot"></span><span class="lite">${o.t}</span>`;
+      b.onclick = ()=>choose(o.v);
+      opts.appendChild(b);
+    });
+  }
+
+  function choose(v){
+    answers[idx] = v;
+    render(); // 選択ハイライト
+    if(advanceTimer) clearTimeout(advanceTimer);   // 連打で多重進行しないようガード
+    advanceTimer = setTimeout(()=>{
+      advanceTimer = null;
+      if(idx < QUESTIONS.length-1){ idx++; render(); }
+      else finish();
+    }, 180);
+  }
+
+  function back(){ if(advanceTimer){clearTimeout(advanceTimer);advanceTimer=null;} if(idx>0){ idx--; render(); } }
+
+  function finish(){
+    const score = {EI:0,SN:0,TF:0,JP:0,AD:0,HL:0};
+    QUESTIONS.forEach((Q,i)=> score[Q.axis] += (answers[i]||0));
+    // 5段階スコアの合計符号で判定（0=完全中立は前者へ寄せる）
+    const code = Object.keys(AXIS).map(ax=> score[ax] >= 0 ? AXIS[ax][0] : AXIS[ax][1]).join("");
+    $("bar").style.width = "100%";
+    $("progress").setAttribute("aria-valuenow", QUESTIONS.length);
+    history.replaceState(null, "", "#" + code);   // 共有用にURLへ（履歴を汚さない）
+    showResult(code);
+  }
+
+  /* code = 6文字: [EI][SN][TF][JP][AD][HL] 例 ENFPAH */
+  function showResult(code){
+    if(!RE.test(code)){ show("start"); return; }
+    const mbti = code.slice(0,4);
+    const aKey = code[4], wKey = code[5];
+    const T = TYPES[mbti], A = ATTACK[aKey], W = WEIGHT[wKey];
+    const g = groupInfo(mbti);
+    const heavy = wKey === "H";
+
+    $("rChar").innerHTML = animalSVG(g.animal, g.hex, heavy, T.item);
+    $("resHero").style.background =
+      `radial-gradient(120% 120% at 50% -10%, ${g.glow} 0%, transparent 60%), linear-gradient(180deg,var(--card2),var(--card))`;
+    $("rCatch").textContent = T.catch;
+    $("rName").innerHTML = `${W.tag.split(" ")[0]}・${A.tag.split(" ")[0]}の<br>${T.name}`;
+    $("rAnimal").textContent = `${g.emoji} ${g.label}`;
+    $("rCode").textContent = `TYPE : ${mbti} / ${aKey} / ${wKey}`;
+
+    $("rTags").innerHTML =
+      tagHTML(mbti, g.hex) + tagHTML(A.tag, "#b6ff3c") + tagHTML(W.tag, "#ff4d8d");
+
+    $("rBody").textContent     = T.body;
+    $("rStrength").textContent = T.strength;
+    $("rLandmine").textContent = T.landmine;
+    $("rAttack").textContent   = A.body;
+    $("rWeight").textContent   = W.body;
+    setMeter("mAttack", A.pct, "linear-gradient(90deg,var(--cyan),var(--acid))");
+    setMeter("mWeight", W.pct, "linear-gradient(90deg,var(--purple),var(--pink))");
+
+    $("rGood").innerHTML = T.good.map(m=>`<div>${TYPES[m].name}<small>${m}</small></div>`).join("");
+    $("rBad").innerHTML  = T.bad.map(m=>`<div>${TYPES[m].name}<small>${m}</small></div>`).join("");
+
+    show("result");
+  }
+
+  function setMeter(id,pct,grad){
+    const el=$(id); el.style.background=grad; el.style.width="0";
+    el.style.transition="width .8s cubic-bezier(.2,.8,.2,1) .35s";  // SVG出現と競合しないよう少し遅らせる
+    requestAnimationFrame(()=> setTimeout(()=> el.style.width=pct+"%",60));
+  }
+  function tagHTML(text,color){
+    return `<span class="tag" style="color:${color};border-color:${color};background:${color}1f">${text}</span>`;
+  }
+  /* タイプ群: 分析家NT=ヘビ / 外交官NF=うさぎ / 番人SJ=タコ / 探検家SP=クラゲ */
+  function groupInfo(mbti){
+    if(mbti.includes("N")&&mbti.includes("T")) return {hex:"#4de2ff",glow:"rgba(77,226,255,.22)",animal:"snake", emoji:"🐍",label:"ヘビ・分析家タイプ"};
+    if(mbti.includes("N")&&mbti.includes("F")) return {hex:"#a855f7",glow:"rgba(168,85,247,.24)",animal:"rabbit",emoji:"🐰",label:"うさぎ・外交官タイプ"};
+    if(mbti.includes("S")&&mbti.includes("J")) return {hex:"#b6ff3c",glow:"rgba(182,255,60,.18)",animal:"octopus",emoji:"🐙",label:"タコ・番人タイプ"};
+    return {hex:"#ff4d8d",glow:"rgba(255,77,141,.22)",animal:"jelly",emoji:"🎐",label:"クラゲ・探検家タイプ"};
+  }
+
+  /* ---- share ---- */
+  function curURL(){
+    const base = location.href.split("#")[0];
+    return base + "#" + location.hash.replace(/^#/,"");
+  }
+  function shareText(){
+    const code = location.hash.replace(/^#/,"").toUpperCase();
+    if(!RE.test(code)) return "恋するへびべあ診断 🐍🐰🐙🎐";
+    const mbti=code.slice(0,4), A=ATTACK[code[4]], W=WEIGHT[code[5]], T=TYPES[mbti], g=groupInfo(mbti);
+    if(!T||!A||!W) return "恋するへびべあ診断 🐍🐰🐙🎐";
+    return `私は「${W.tag.split(" ")[0]}・${A.tag.split(" ")[0]}の${T.name}」${g.emoji}でした\n「${T.catch}」\n#恋するへびべあ診断`;
+  }
+  function share(){
+    const url = curURL(), text = shareText();
+    if(navigator.share){ navigator.share({title:"恋するへびべあ診断",text,url}).catch(()=>{}); return; }
+    const tw = "https://twitter.com/intent/tweet?text="+encodeURIComponent(text+"\n")+"&url="+encodeURIComponent(url);
+    window.open(tw,"_blank","noopener");
+  }
+  function copy(){
+    const url = curURL();
+    const done = ()=>toast("リンクをコピーしたよ🔗");
+    if(navigator.clipboard&&navigator.clipboard.writeText){
+      navigator.clipboard.writeText(url).then(done).catch(()=>fallbackCopy(url,done));
+    } else fallbackCopy(url,done);
+  }
+  function fallbackCopy(text,cb){
+    const ta=document.createElement("textarea"); ta.value=text;
+    ta.style.position="fixed"; ta.style.opacity="0"; document.body.appendChild(ta);
+    ta.select();
+    let ok=false; try{ ok=document.execCommand("copy"); }catch(e){}
+    document.body.removeChild(ta);
+    if(ok) cb&&cb(); else toast("コピーできなかった…URLを長押しでコピーしてね");
+  }
+  let toastTimer;
+  function toast(msg){
+    const t=$("toast"); t.textContent=msg; t.classList.add("on");
+    clearTimeout(toastTimer); toastTimer=setTimeout(()=>t.classList.remove("on"),1900);
+  }
+
+  function restart(){
+    if(advanceTimer){clearTimeout(advanceTimer);advanceTimer=null;}
+    history.replaceState(null, "", location.pathname + location.search);   // #を完全に消す
+    show("start");
+  }
+
+  /* ---- URLハッシュ連動（直リンク＆戻る/進むボタン対応） ---- */
+  function syncFromHash(){
+    const code = location.hash.replace(/^#/,"").toUpperCase();
+    if(RE.test(code)) showResult(code);
+    else show("start");
+  }
+  window.addEventListener("hashchange", syncFromHash);
+
+  function boot(){
+    const n = QUESTIONS.length;
+    $("qtotal").textContent = n;
+    $("specQ").textContent = n;
+    $("progress").setAttribute("aria-valuemax", n);
+    const code = location.hash.replace(/^#/,"").toUpperCase();
+    if(RE.test(code)) showResult(code);
+  }
+
+  return {start,back,share,copy,restart,boot};
+})();
+
+App.boot();
+</script>
+</body>
+</html>
