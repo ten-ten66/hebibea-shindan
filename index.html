@@ -4,11 +4,11 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>恋するへびべあ診断 🐍🐰🐙🎐 ｜ 毒舌MBTI恋愛診断・全64タイプ</title>
-<meta name="description" content="よくある16タイプ診断じゃ物足りないあなたへ。6つの軸・全30問・全64タイプであなたの恋愛をぜんぶ暴く毒舌診断。覚悟はいい？">
+<meta name="description" content="よくある16タイプ診断じゃ物足りないあなたへ。6つの軸・全50問・全64タイプであなたの恋愛をぜんぶ暴く毒舌診断。覚悟はいい？">
 <meta property="og:title" content="恋するへびべあ診断 🐍🐰🐙🎐">
-<meta property="og:description" content="毒舌の生き物たちがあなたの恋愛をぜんぶ暴く。全30問・64タイプのMBTI恋愛診断。情け容赦ない辛口、覚悟はいい？">
+<meta property="og:description" content="毒舌の生き物たちがあなたの恋愛をぜんぶ暴く。全50問・64タイプのMBTI恋愛診断。情け容赦ない辛口、覚悟はいい？">
 <meta property="og:type" content="website">
-<!-- 本番デプロイ時に 1200×630 の ogp.png を同階層に設置してください -->
+<!-- 公開時は og:image を公開URLからの絶対パスにし、og:url も設定してください -->
 <meta property="og:image" content="ogp.png">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -265,7 +265,7 @@
    恋するへびべあ診断 — データ & ロジック
    軸: EI(外向/内向) SN(現実/ロマン) TF(理屈/感情)
        JP(計画/自由) AD(肉食/草食) HL(重い/軽い)
-   各軸5問 = 30問。合計の符号でタイプ決定（奇数問なので引分なし）。
+   各軸8〜9問 = 計50問。5段階回答(+2〜-2)の合計の符号でタイプ決定（0は前側の文字に寄せる）。
    生き物: 分析家NT=ヘビ / 外交官NF=うさぎ / 番人SJ=タコ / 探検家SP=クラゲ
    ※本家「恋するへびべあ診断(KUMA×16 LOVE TYPES)」とは別物の独自版。名称・文章・キャラはオリジナル。
    ========================================================= */
@@ -503,7 +503,7 @@ const WEIGHT = {
 const App = (()=>{
   const $ = id => document.getElementById(id);
   const RE = /^[EI][SN][TF][JP][AD][HL]$/;
-  let answers = [];   // +1 / -1
+  let answers = [];   // +2〜-2（5段階）
   let idx = 0;
   let advanceTimer = null;
 
